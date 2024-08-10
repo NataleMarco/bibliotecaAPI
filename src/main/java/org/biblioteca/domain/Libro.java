@@ -1,3 +1,4 @@
+//Libro.java
 package org.biblioteca.domain;
 
 import lombok.AllArgsConstructor;
@@ -12,5 +13,5 @@ public class Libro{
 	private Integer id;
 	private String titulo;
 	private String author;
-	private Integer isbn;
+	private Long isbn;
 }
