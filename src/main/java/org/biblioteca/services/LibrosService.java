@@ -11,12 +11,12 @@ import org.biblioteca.dto.SaveLibroResponseDTO;
 public interface LibrosService{
 	List<LibroDTO> getLibros();
 	List<LibroDTO> getLibrosByAuthor(String author);
-	List<LibroDTO> getLibroByTitulo(String name);
+	List<LibroDTO> getLibrosByTitulo(String name);
 	LibroDTO getLibroById(Integer id);
 	LibroDTO getLibroByIsbn(Long isbn);
 	SaveLibroResponseDTO saveLibro(SaveLibroDTO libro);
 	LibroDTO removeLibroById(Integer id);
-	void updateLibro();
+	LibroDTO updateLibro(Integer id, SaveLibroDTO libro);
 
 	
 }

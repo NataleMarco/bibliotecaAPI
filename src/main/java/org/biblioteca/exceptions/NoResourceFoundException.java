@@ -1,8 +1,8 @@
 package org.biblioteca.exceptions;
 
-public class MethodArgumentTypeMismatchException extends RuntimeException{
+public class NoResourceFoundException extends RuntimeException{
 
-		public MethodArgumentTypeMismatchException(String message){
+		public NoResourceFoundException(String message){
 				super(message);
 		}
 
@@ -10,6 +10,4 @@ public class MethodArgumentTypeMismatchException extends RuntimeException{
 		public String getMessage(){
 				return super.getMessage();
 		}
-
-
 }

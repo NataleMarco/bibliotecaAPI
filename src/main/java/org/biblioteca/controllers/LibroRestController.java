@@ -9,11 +9,13 @@ import lombok.extern.log4j.Log4j2;
 import org.biblioteca.dto.SaveLibroDTO;
 import org.biblioteca.services.LibrosService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.JpaSort.Path;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -31,6 +33,28 @@ public class LibroRestController {
 				return ResponseEntity.ok().body(librosService.getLibros());
 		}
 
+		@GetMapping("/search/author/{author}")
+		public ResponseEntity<?> getLibrosByAuthor(@PathVariable String author){
+				return ResponseEntity.ok().body(librosService.getLibrosByAuthor(author));
+		}
+
+		@GetMapping("/search/titulo/{titulo}")
+		public ResponseEntity<?> getLibrosByTitulo(@PathVariable String titulo){
+				return ResponseEntity.ok().body(librosService.getLibrosByTitulo(titulo));
+		}
+
+		@GetMapping("/search/isbn/{isbn}")
+		public ResponseEntity<?> getLibrosByIsbn(@PathVariable Long isbn){
+				return ResponseEntity.ok().body(librosService.getLibroByIsbn(isbn));
+		}
+		
+
+		@PutMapping("/{id}")
+		public ResponseEntity<?> updateLibro(@PathVariable Integer id,@RequestBody SaveLibroDTO libro){
+
+				return ResponseEntity.ok().body(librosService.updateLibro(id,libro));
+
+		}
 		@PostMapping()
 		public ResponseEntity<?> postLibro(@RequestBody SaveLibroDTO saveLibroDTO) {
 				return ResponseEntity.ok().body(librosService.saveLibro(saveLibroDTO));

@@ -1,8 +1,8 @@
 package org.biblioteca.exceptions;
 
-public class MethodArgumentTypeMismatchException extends RuntimeException{
+public class HttpMessageNotReadableException extends RuntimeException{
 
-		public MethodArgumentTypeMismatchException(String message){
+		public HttpMessageNotReadableException (String message) {
 				super(message);
 		}
 
@@ -10,6 +10,5 @@ public class MethodArgumentTypeMismatchException extends RuntimeException{
 		public String getMessage(){
 				return super.getMessage();
 		}
-
-
 }
+

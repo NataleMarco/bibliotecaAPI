@@ -36,4 +36,7 @@ public class LibroEntity{
 				return new LibroEntity(libroDTO.getId(), libroDTO.getTitulo(),libroDTO.getAuthor(),libroDTO.getIsbn());
 		}
 
+
+
+
 }

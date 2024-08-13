@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
-public class GlobalExcepcionHandler { 
+public class GlobalExceptionHandler { 
 
 		@ExceptionHandler(ResourceNotFoundException.class)
 		protected ResponseEntity<?> handleResourceNotFound(ResourceNotFoundException ex){
@@ -24,14 +24,30 @@ public class GlobalExcepcionHandler {
 		}
 
 		@ExceptionHandler(MethodArgumentTypeMismatchException.class)
-		protected ResponseEntity<?> handleMethodArgumentTipeMismatch(MethodArgumentTypeMismatchException ex){
+		protected ResponseEntity<?> handleMethodArgumentTipeMismatch(){
 				return buildResponseEntity(HttpStatus.BAD_REQUEST,"El tipo de dato ingresado no es valido");
 		}
 
-		@ExceptionHandler(Exception.class)
-		protected ResponseEntity<?> handleExceptino(Exception ex){
-				return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,"Ha ocurrido un error interno");
+		@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+		protected ResponseEntity<?> handleRequestMethodNotSupported() {
+				return buildResponseEntity(HttpStatus.METHOD_NOT_ALLOWED, "El Método de solicitud no está soportado");
 		}
+
+		@ExceptionHandler(NoResourceFoundException.class)
+		protected ResponseEntity<?> handleNoResourceFound(){
+				return buildResponseEntity(HttpStatus.NOT_FOUND, "No se encontro el URL introducido");
+		}
+
+		@ExceptionHandler(HttpMessageNotReadableException.class)
+		protected ResponseEntity<?> handleMessageNotReadableException(){
+				return buildResponseEntity(HttpStatus.BAD_REQUEST,"Los datos introducidos no son valiods para completar la operacion");
+		}
+
+		//Generic Exception, this will give a server error if there is something that is not especified.
+		//@ExceptionHandler(Exception.class)
+		//protected ResponseEntity<?> handleException(Exception ex){
+		//		return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR,"Ha ocurrido un error interno");
+		//}
 
 		private ResponseEntity<Object> buildResponseEntity(HttpStatus status, String message){
 				Map<String, Object> body = new LinkedHashMap<>();

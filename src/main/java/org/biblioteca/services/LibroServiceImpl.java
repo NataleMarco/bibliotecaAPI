@@ -72,10 +72,15 @@ public class LibroServiceImpl implements LibrosService{
 
 		//Actualizar la informacion de un libro
 		@Override
-		public void updateLibro(){
+		public LibroDTO updateLibro(Integer id, SaveLibroDTO libro){
+				LibroEntity libroEntity = getLibroEntityById(id);
+				libroEntity = LibroEntity.fromSaveDTO(libro);
+				libroEntity.setId(id);
+				librosRepository.save(libroEntity);
+				return LibroDTO.fromEntity(libroEntity);
 		}
 
-		//Buscar el libro por autor y devolver el DTO o los DTO
+		//Buscar el libro por autor y devolver el/los DTO
 		@Override
 		public List<LibroDTO> getLibrosByAuthor(String author){
 
@@ -93,15 +98,13 @@ public class LibroServiceImpl implements LibrosService{
 		@Override
 		public LibroDTO getLibroByIsbn(Long isbn){
 				return LibroDTO.fromEntity(getLibroEntityByIsbn(isbn));
-
 		}
 
 		//Buscar el libro por el titulo y devolver el DTO
 		@Override
-		public List<LibroDTO> getLibroByTitulo(String titulo){
+		public List<LibroDTO> getLibrosByTitulo(String titulo){
 				List<LibroDTO> librosDTOs = new ArrayList<>();
 				List<LibroEntity> librosEntities = getLibroEntityByTitulo(titulo);
-
 				for(LibroEntity libro:librosEntities){
 						librosDTOs.add(LibroDTO.fromEntity(libro));
 				}
@@ -127,8 +130,6 @@ public class LibroServiceImpl implements LibrosService{
 		// POR AUTOR 
 		private List<LibroEntity> getLibrosEntitiesByAuthor(String author){
 				List<LibroEntity> libros = librosRepository.findAll();
-
-
 				List<LibroEntity> librosEncontrados =
 						libros.stream()
 						.filter(libro -> libro.getAuthor().toLowerCase().contains(author.toLowerCase()))
@@ -138,7 +139,6 @@ public class LibroServiceImpl implements LibrosService{
 				}else{
 						return librosEncontrados;
 				}
-
 		}
 
 		// POR ISBN 
@@ -148,7 +148,6 @@ public class LibroServiceImpl implements LibrosService{
 						.filter(libro -> libro.getIsbn().equals(isbn))
 						.findAny()
 						.orElseThrow(() -> new ResourceNotFoundException("No se encontro ningun libro con el isbn " + isbn));
-
 		}
 
 		// POR TITULO 
