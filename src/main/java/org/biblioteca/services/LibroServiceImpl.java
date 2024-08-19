@@ -77,6 +77,7 @@ public class LibroServiceImpl implements LibrosService{
 				libroEntity = LibroEntity.fromSaveDTO(libro);
 				libroEntity.setId(id);
 				librosRepository.save(libroEntity);
+
 				return LibroDTO.fromEntity(libroEntity);
 		}
 
@@ -98,6 +99,7 @@ public class LibroServiceImpl implements LibrosService{
 		@Override
 		public LibroDTO getLibroByIsbn(Long isbn){
 				return LibroDTO.fromEntity(getLibroEntityByIsbn(isbn));
+
 		}
 
 		//Buscar el libro por el titulo y devolver el DTO
@@ -105,6 +107,7 @@ public class LibroServiceImpl implements LibrosService{
 		public List<LibroDTO> getLibrosByTitulo(String titulo){
 				List<LibroDTO> librosDTOs = new ArrayList<>();
 				List<LibroEntity> librosEntities = getLibroEntityByTitulo(titulo);
+
 				for(LibroEntity libro:librosEntities){
 						librosDTOs.add(LibroDTO.fromEntity(libro));
 				}
@@ -148,6 +151,7 @@ public class LibroServiceImpl implements LibrosService{
 						.filter(libro -> libro.getIsbn().equals(isbn))
 						.findAny()
 						.orElseThrow(() -> new ResourceNotFoundException("No se encontro ningun libro con el isbn " + isbn));
+
 		}
 
 		// POR TITULO 
